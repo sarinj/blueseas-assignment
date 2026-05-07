@@ -1,4 +1,4 @@
-import { PayrollPage } from "@/pages/Payroll/PayrollPage"
+import PayrollPage from "@/pages/Payroll/PayrollPage"
 
 export default function Page() {
   return <PayrollPage />

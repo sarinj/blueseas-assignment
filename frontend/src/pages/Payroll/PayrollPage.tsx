@@ -20,7 +20,7 @@ export interface EmployeeOption {
 const defaultMonth = "10"
 const defaultYear = "2568"
 
-export function PayrollPage() {
+export default function PayrollPage() {
   const [option, setOption] = useState<EmployeeOption>({
     month: defaultMonth,
     year: defaultYear,
@@ -82,8 +82,4 @@ export function PayrollPage() {
       </div>
     </main>
   )
-}
-
-export default function PayrollPageRoute() {
-  return null
 }
