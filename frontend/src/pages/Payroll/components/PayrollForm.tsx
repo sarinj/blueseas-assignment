@@ -41,12 +41,14 @@ export type PayrollFormValues = Pick<CalculatePayrollRequestBody, "workDate">
 type PayrollFormProps = {
   daysInMonth: number
   isCalculating: boolean
+  canCalculate: boolean
   onCalculate: (values: PayrollFormValues) => void
 }
 
 export function PayrollForm({
   daysInMonth,
   isCalculating,
+  canCalculate,
   onCalculate,
 }: PayrollFormProps) {
   const defaultValues = React.useMemo(
@@ -100,7 +102,7 @@ export function PayrollForm({
           <Button
             type="submit"
             size="sm"
-            disabled={isCalculating}
+            disabled={isCalculating || !canCalculate}
             className="min-w-32 rounded-md"
           >
             {isCalculating ? "กำลังคำนวณ" : "คำนวณเงินเดือน"}

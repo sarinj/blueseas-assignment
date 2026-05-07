@@ -9,6 +9,7 @@ import { useState } from "react"
 import { calculatePayroll } from "@/api/payroll/payroll"
 import { CalculatePayrollRequestBody } from "@/api/payroll/interface"
 import { getDaysInMonth } from "@/lib/utils"
+import { toast } from "sonner"
 
 export interface EmployeeOption {
   employeeId?: string
@@ -28,16 +29,21 @@ export function PayrollPage() {
     option.month ?? defaultMonth,
     option.year ?? defaultYear,
   )
+  const employeeId = Number(option.employeeId)
+  const canCalculate = Number.isInteger(employeeId) && employeeId > 0
 
   const { mutate, data, isPending } = useMutation({
     mutationFn: (body: CalculatePayrollRequestBody) => calculatePayroll(body),
   })
 
   async function handleCalculate(values: PayrollFormValues) {
-    if (!option) return
+    if (!canCalculate) {
+      toast.error("กรุณาเลือกพนักงานก่อนคำนวณเงินเดือน")
+      return
+    }
 
     mutate({
-      employeeId: Number(option.employeeId),
+      employeeId,
       workDate: values.workDate.map((item) => ({
         day: item.day,
         workHour: item.workHour,
@@ -68,6 +74,7 @@ export function PayrollPage() {
               daysInMonth={daysInMonth}
               onCalculate={handleCalculate}
               isCalculating={isPending}
+              canCalculate={canCalculate}
             />
             <PayrollResult result={data} isLoading={isPending} />
           </div>

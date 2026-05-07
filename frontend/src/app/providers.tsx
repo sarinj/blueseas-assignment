@@ -1,7 +1,8 @@
-"use client";
+"use client"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import * as React from "react";
+import { Toaster } from "@/components/ui/sonner"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import * as React from "react"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = React.useState(
@@ -13,10 +14,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
             staleTime: 30_000,
           },
         },
-      })
-  );
+      }),
+  )
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <Toaster />
+    </QueryClientProvider>
+  )
 }
